@@ -106,7 +106,7 @@ $$
 $$
 
 ---
-## Repository Structure
+## 📂 Repository Structure
 ```
 ├── LICENSE
 ├── README.md
