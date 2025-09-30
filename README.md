@@ -25,9 +25,8 @@ This repository provides:
 The **Black–Scholes–Merton model** (1973) assumes:  
 - Asset prices follow **geometric Brownian motion (GBM)**:  
 
-\[
-dS_t = \mu S_t dt + \sigma S_t dW_t
-\]
+$$dS_t = \mu S_t dt + \sigma S_t dW_t$$
+
 
 where:  
 - \( S_t \) = asset price at time \(t\)  
