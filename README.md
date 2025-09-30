@@ -1,220 +1,116 @@
 # 📊 Derivatives & Volatility Analysis  
 This repository implements option pricing models (Black–Scholes and Heston), volatility analysis tools, and calibration routines. It serves as both a learning resource and a practical toolkit for quantitative finance enthusiasts, traders, and researchers.
 
-🔎 **Project Overview**
+## 🔎 Project Overview  
+
 Options are derivative instruments whose value depends on an underlying asset (e.g., stock, index, commodity). Their pricing critically depends on volatility — a measure of uncertainty in asset returns.
 
-This repository provides:
+This repository provides:  
+- **Option Pricing Models**  
+  - Black–Scholes–Merton (BSM) model  
+  - Heston stochastic volatility model  
+- **Volatility Analysis**  
+  - Historical volatility estimation  
+  - Implied volatility extraction  
+- **Calibration**  
+  - A simple example of calibrating the Heston model to market data  
+- **Interactive Workflows**  
+  - Jupyter notebooks for experimentation and visualization
+ ---
 
-**Option Pricing Models**
-Black–Scholes–Merton (BSM) model
+## 📚 Theoretical Background  
 
-**Heston stochastic volatility model**
+### 1. Black–Scholes Model  
 
-Volatility Analysis
-Historical volatility estimation
+The **Black–Scholes–Merton model** (1973) assumes:  
+- Asset prices follow **geometric Brownian motion (GBM)**:  
 
-Implied volatility extraction
+\[
+dS_t = \mu S_t dt + \sigma S_t dW_t
+\]
 
-Calibration
-A simple example of calibrating the Heston model to market data
+where:  
+- \( S_t \) = asset price at time \(t\)  
+- \(\mu\) = drift (expected return)  
+- \(\sigma\) = volatility  
+- \( W_t \) = Wiener process (Brownian motion)  
 
-Interactive Workflows
-Jupyter notebooks for experimentation and visualization
+- European call option price under risk-neutral measure:  
 
-📚 Theoretical Background
-1. Black–Scholes Model
-The Black–Scholes–Merton model (1973) assumes:
+\[
+C(S, t) = S_t N(d_1) - K e^{-r(T-t)} N(d_2)
+\]
 
-Asset prices follow geometric Brownian motion (GBM):
+with:  
 
-dS_t=μS_tdt+σS_tdW_t
-$$$$where:
+\[
+d_1 = \frac{\ln \left(\frac{S_t}{K}\right) + \left(r + \frac{\sigma^2}{2}\right)(T-t)}{\sigma \sqrt{T-t}}, \quad 
+d_2 = d_1 - \sigma \sqrt{T-t}
+\]
 
-S 
-t
-​
-  = asset price at time t
+where \( N(\cdot) \) is the standard normal CDF.  
 
-μ = drift (expected return)
+---
 
-σ = volatility
+### 2. Heston Model  
 
-W 
-t
-​
-  = Wiener process (Brownian motion)
+The **Heston model** (1993) extends Black–Scholes by allowing volatility itself to follow a stochastic process:  
 
-European call option price under risk-neutral measure:
+\[
+dS_t = \mu S_t dt + \sqrt{v_t} S_t dW_t^S
+\]  
 
-C(S,t)=S_tN(d_1)−Ke 
-−r(T−t)
- N(d_2)
-$$$$with:
+\[
+dv_t = \kappa (\theta - v_t) dt + \xi \sqrt{v_t} dW_t^v
+\]  
 
-d_1= 
-σ 
-T−t
-​
- 
-ln( 
-K
-S_t
-​
- )+(r+ 
-2
-σ 
-2
- 
-​
- )(T−t)
-​
- ,d_2=d_1−σ 
-T−t
-​
- 
-$$$$where N(⋅) is the standard normal CDF.
+with correlation:  
 
-2. Heston Model
-The Heston model (1993) extends Black–Scholes by allowing volatility itself to follow a stochastic process:
+\[
+dW_t^S dW_t^v = \rho dt
+\]  
 
-Asset price process:
+Parameters:  
+- \( v_t \): instantaneous variance  
+- \( \kappa \): mean reversion speed  
+- \( \theta \): long-term variance  
+- \( \xi \): volatility of variance ("vol of vol")  
+- \( \rho \): correlation between asset and variance shocks  
 
-dS_t=μS_tdt+ 
-v_t
-​
- S_tdW_t 
-S
- 
-$$$$
+The model captures **volatility clustering**, **smiles/skews** in implied volatility, and is widely used in practice.  
 
-Variance process (Ornstein–Uhlenbeck type):
+---
 
-dv_t=κ(θ−v_t)dt+ξ 
-v_t
-​
- dW_t 
-v
- 
-$$$$
+### 3. Volatility Concepts  
 
-Correlation:
+- **Historical Volatility (HV):**  
+  Estimated from past returns:  
 
-dW_t 
-S
- dW_t 
-v
- =ρdt
-$$$$
-$$Parameters:
+\[
+\sigma_{hist} = \sqrt{252} \cdot \text{StdDev}(\ln \frac{S_t}{S_{t-1}})
+\]
 
-v 
-t
-​
- : instantaneous variance
+- **Implied Volatility (IV):**  
+  The volatility parameter that, when plugged into the Black–Scholes formula, matches the observed option market price.  
 
-κ: mean reversion speed
+\[
+\text{Market Price} = BS(S, K, r, T, \sigma_{impl})
+\]  
 
-θ: long-term variance
+IV reflects **market expectations** of future uncertainty.  
 
-ξ: volatility of variance ("vol of vol")
+---
 
-ρ: correlation between asset and variance shocks
+### 4. Calibration  
 
-The model captures volatility clustering, smiles/skews in implied volatility, and is widely used in practice.
+Calibrating models like Heston means finding parameters \((\kappa, \theta, \xi, \rho, v_0)\) that minimize the difference between model prices and observed market prices.  
 
-3. Volatility Concepts
-Historical Volatility (HV): Estimated from past returns:
+Typical optimization target:  
 
-σ_hist= 
-252
-​
- ⋅StdDev(ln 
-S_t−1
-S_t
-​
- )
-$$$$
+\[
+\min_{\Theta} \sum_{i=1}^N \left( C_{model}(K_i, T_i; \Theta) - C_{market}(K_i, T_i) \right)^2
+\]  
 
-Implied Volatility (IV): The volatility parameter that, when plugged into the Black–Scholes formula, matches the observed option market price.
+where \(\Theta\) is the parameter set.  
 
-Market Price=BS(S,K,r,T,σ_impl)
-$$$$IV reflects market expectations of future uncertainty.
-
-4. Calibration
-Calibrating models like Heston means finding parameters (κ,θ,ξ,ρ,v 
-0
-​
- ) that minimize the difference between model prices and observed market prices.
-
-Typical optimization target:
-
-min_Θ∑_i=1 
-N
- (C_model(K_i,T_i;Θ)−C_market(K_i,T_i)) 
-2
- 
-$$$$where Θ is the parameter set.
-
-📂 Repository Structure
-Derivatives-Volatility-Analysis/
-│── src/                # Model implementations and utilities
-│── notebooks/          # Jupyter notebooks for analysis
-│   └── analysis.ipynb
-│── examples/           # Example scripts for pricing & calibration
-│   └── price_examples.py
-│── tests/              # Unit tests (pytest)
-│── requirements.txt    # Dependencies
-└── README.md           # Project documentation
-
-
-🚀 Quickstart
-1. Setup Environment
-python -m venv .venv
-source .venv/bin/activate   # macOS / Linux
-# .venv\Scripts\activate      # Windows
-pip install -r requirements.txt
-
-
-2. Run Example Script
-python examples/price_examples.py
-
-
-3. Launch Jupyter Notebook
-jupyter lab notebooks/analysis.ipynb
-
-
-✅ Features
-Black–Scholes pricing for European options
-
-Implied volatility calculation via numerical root-finding
-
-Historical volatility from market data
-
-Heston pricing using characteristic functions & Fourier inversion
-
-Simple Heston calibration example
-
-Interactive notebook visualization
-
-🧪 Testing
-Run unit tests with:
-
-pytest tests/
-
-
-📈 Future Enhancements
-Local volatility model implementation
-
-Advanced Heston calibration (global + local optimization)
-
-Monte Carlo simulation for path-dependent options
-
-Volatility surface construction and visualization
-
-📖 References
-Black, F., & Scholes, M. (1973). The Pricing of Options and Corporate Liabilities.
-
-Heston, S. (1993). A Closed-Form Solution for Options with Stochastic Volatility with Applications to Bond and Currency Options.
-
-Gatheral, J. (2006). The Volatility Surface.
+---
