@@ -106,6 +106,7 @@ $$
 $$
 
 ---
+## Repository Structure
 ```
 ├── LICENSE
 ├── README.md
@@ -123,6 +124,26 @@ $$
 └── tests
     └── test_models.py
 ```
+
+---
+
+## Features
+
+- **Model Implementations**: Implement and simulate various derivatives pricing models (Black-Scholes, Heston, etc.).
+- **Volatility Analysis**: Analyze implied and historical volatility using Python.
+- **Examples**: Ready-to-run scripts demonstrating pricing and calibration of derivatives.
+- **Notebooks**: Interactive notebooks for exploring data, models, and visualizations.
+- **Testing**: Unit tests to ensure the correctness of model implementations.
+
+---
+
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/Derivatives-Volatility-Analysis.git
+cd Derivatives-Volatility-Analysis
 
 
 
