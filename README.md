@@ -18,98 +18,91 @@ This repository provides:
   - Jupyter notebooks for experimentation and visualization
  ---
 
-## 📚 Theoretical Background  
+## 📚 Theoretical Background
 
-### 1. Black–Scholes Model  
+### 1. Black–Scholes Model
 
 The **Black–Scholes–Merton model** (1973) assumes:  
 - Asset prices follow **geometric Brownian motion (GBM)**:  
 
-$$dS_t = \mu S_t dt + \sigma S_t dW_t$$
-
+$$
+dS_t = \mu S_t \, dt + \sigma S_t \, dW_t
+$$
 
 where:  
-- \( S_t \) = asset price at time \(t\)  
-- \(\mu\) = drift (expected return)  
-- \(\sigma\) = volatility  
-- \( W_t \) = Wiener process (Brownian motion)  
+- $S_t$ = asset price at time $t$  
+- $\mu$ = drift (expected return)  
+- $\sigma$ = volatility  
+- $W_t$ = Wiener process (Brownian motion)  
 
-- European call option price under risk-neutral measure:  
+European call option price under risk-neutral measure:
 
-\[
+$$
 C(S, t) = S_t N(d_1) - K e^{-r(T-t)} N(d_2)
-\]
+$$
 
 with:  
 
-\[
-d_1 = \frac{\ln \left(\frac{S_t}{K}\right) + \left(r + \frac{\sigma^2}{2}\right)(T-t)}{\sigma \sqrt{T-t}}, \quad 
+$$
+d_1 = \frac{\ln \left(\frac{S_t}{K}\right) + \left(r + \frac{\sigma^2}{2}\right)(T-t)}{\sigma \sqrt{T-t}}, \quad
 d_2 = d_1 - \sigma \sqrt{T-t}
-\]
+$$
 
-where \( N(\cdot) \) is the standard normal CDF.  
+where $N(\cdot)$ is the standard normal CDF.
 
 ---
 
-### 2. Heston Model  
+### 2. Heston Model
 
-The **Heston model** (1993) extends Black–Scholes by allowing volatility itself to follow a stochastic process:  
+The **Heston model** (1993) extends Black–Scholes by allowing volatility itself to follow a stochastic process:
 
-\[
-dS_t = \mu S_t dt + \sqrt{v_t} S_t dW_t^S
-\]  
+$$
+dS_t = \mu S_t \, dt + \sqrt{v_t} S_t \, dW_t^S
+$$
 
-\[
-dv_t = \kappa (\theta - v_t) dt + \xi \sqrt{v_t} dW_t^v
-\]  
+$$
+dv_t = \kappa (\theta - v_t) \, dt + \xi \sqrt{v_t} \, dW_t^v
+$$
 
-with correlation:  
+with correlation:
 
-\[
-dW_t^S dW_t^v = \rho dt
-\]  
+$$
+dW_t^S \, dW_t^v = \rho \, dt
+$$
 
 Parameters:  
-- \( v_t \): instantaneous variance  
-- \( \kappa \): mean reversion speed  
-- \( \theta \): long-term variance  
-- \( \xi \): volatility of variance ("vol of vol")  
-- \( \rho \): correlation between asset and variance shocks  
-
-The model captures **volatility clustering**, **smiles/skews** in implied volatility, and is widely used in practice.  
+- $v_t$: instantaneous variance  
+- $\kappa$: mean reversion speed  
+- $\theta$: long-term variance  
+- $\xi$: volatility of variance ("vol of vol")  
+- $\rho$: correlation between asset and variance shocks
 
 ---
 
-### 3. Volatility Concepts  
+### 3. Volatility Concepts
 
 - **Historical Volatility (HV):**  
-  Estimated from past returns:  
 
-\[
-\sigma_{hist} = \sqrt{252} \cdot \text{StdDev}(\ln \frac{S_t}{S_{t-1}})
-\]
+$$
+\sigma_{hist} = \sqrt{252} \cdot \text{StdDev} \left( \ln \frac{S_t}{S_{t-1}} \right)
+$$
 
 - **Implied Volatility (IV):**  
-  The volatility parameter that, when plugged into the Black–Scholes formula, matches the observed option market price.  
 
-\[
+$$
 \text{Market Price} = BS(S, K, r, T, \sigma_{impl})
-\]  
+$$
 
-IV reflects **market expectations** of future uncertainty.  
+IV reflects market expectations of future uncertainty.
 
 ---
 
-### 4. Calibration  
+### 4. Calibration
 
-Calibrating models like Heston means finding parameters \((\kappa, \theta, \xi, \rho, v_0)\) that minimize the difference between model prices and observed market prices.  
+Calibrating models like Heston means finding parameters $(\kappa, \theta, \xi, \rho, v_0)$ that minimize the difference between model prices and observed market prices:
 
-Typical optimization target:  
-
-\[
+$$
 \min_{\Theta} \sum_{i=1}^N \left( C_{model}(K_i, T_i; \Theta) - C_{market}(K_i, T_i) \right)^2
-\]  
-
-where \(\Theta\) is the parameter set.  
+$$
 
 ---
