@@ -137,16 +137,43 @@ $$
 
 ---
 
-## Installation
+## 🚀 Quickstart
 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/Derivatives-Volatility-Analysis.git
+git clone https://github.com/saumyajain2007/Derivatives-Volatility-Analysis.git
 cd Derivatives-Volatility-Analysis
+```
 
+2. Run Example Script:
 
+```bash
+python examples/price_examples.py
+```
+3. Launch Jupyter Notebook:
 
+```bash
+jupyter lab notebooks/analysis.ipynb
+```
+
+## 🧪 Testing
+Run unit tests with:
+```bash
+pytest tests/
+```
+## 📈 Future Enhancements
+
+- Local volatility model implementation
+- Advanced Heston calibration (global + local optimization)
+- Monte Carlo simulation for path-dependent options
+- Volatility surface construction and visualization
+
+## 📖 References
+
+- Black, F., & Scholes, M. (1973). The Pricing of Options and Corporate Liabilities.
+- Heston, S. (1993). A Closed-Form Solution for Options with Stochastic Volatility with Applications to Bond and Currency Options.
+- Gatheral, J. (2006). The Volatility Surface.
 
 
 
