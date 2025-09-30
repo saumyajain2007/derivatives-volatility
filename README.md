@@ -1,4 +1,4 @@
-📊 **Derivatives & Volatility Analysis**
+# 📊 Derivatives & Volatility Analysis  
 This repository implements option pricing models (Black–Scholes and Heston), volatility analysis tools, and calibration routines. It serves as both a learning resource and a practical toolkit for quantitative finance enthusiasts, traders, and researchers.
 
 🔎 **Project Overview**
