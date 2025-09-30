@@ -1,15 +1,15 @@
-📊 Derivatives & Volatility Analysis
+📊 **Derivatives & Volatility Analysis**
 This repository implements option pricing models (Black–Scholes and Heston), volatility analysis tools, and calibration routines. It serves as both a learning resource and a practical toolkit for quantitative finance enthusiasts, traders, and researchers.
 
-🔎 Project Overview
+🔎 **Project Overview**
 Options are derivative instruments whose value depends on an underlying asset (e.g., stock, index, commodity). Their pricing critically depends on volatility — a measure of uncertainty in asset returns.
 
 This repository provides:
 
-Option Pricing Models
+**Option Pricing Models**
 Black–Scholes–Merton (BSM) model
 
-Heston stochastic volatility model
+**Heston stochastic volatility model**
 
 Volatility Analysis
 Historical volatility estimation
